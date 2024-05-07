@@ -129,7 +129,7 @@ export class AltitudeGraph {
 
                             var currAirMass = (1 / Math.cos(AngleConversionService.d2r(90 - currHorizonCoordinate.altitude)));
 
-                            return [`Date: ${currDateFormatted}`, `LST: ${lstDate}`, `Alt/Az: ${currHorizonCoordinate.altitude.toFixed(1)}/${currHorizonCoordinate.azimuth.toFixed(1)}`, `AM: ${currAirMass.toPrecision(4)}`];
+                            return [`Date: ${currDateFormatted}`, `LST: ${lstDate}`, `Alt/Az: ${currHorizonCoordinate.altitude.toFixed(1)}/${currHorizonCoordinate.azimuth.toFixed(1)}`, `Air mass: ${currAirMass.toPrecision(4)}`];
                         }
                     }
                 },

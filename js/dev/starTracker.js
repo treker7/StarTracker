@@ -226,7 +226,7 @@ window.onload = function () {
         document.getElementById("astronomicalObjectImageFOVLabel").innerHTML = (DSS_FOV * 60); // in arcminutes
 
         // display the image of this astronomical object
-        document.getElementById("astronomicalObjectImage").src = `http://server1.wikisky.org/imgcut?ra=${(astronomicalObject.rightAscension / 15.0)}&de=${astronomicalObject.declination}&angle=${DSS_FOV}&img_id=all&width=${DSS_IMAGE_WIDTH}&height=${DSS_IMAGE_HEIGHT}&survey=${SKY_SURVEY_SOURCE}`;
+        document.getElementById("astronomicalObjectImage").src = `https://server1.wikisky.org/imgcut?ra=${(astronomicalObject.rightAscension / 15.0)}&de=${astronomicalObject.declination}&angle=${DSS_FOV}&img_id=all&width=${DSS_IMAGE_WIDTH}&height=${DSS_IMAGE_HEIGHT}&survey=${SKY_SURVEY_SOURCE}`;
 
         // update the altitude graph
         altitudeGraph.setAstronomicalObject(new AstronomicalObjectGraph(astronomicalObject, "#000F"), 0);
@@ -248,7 +248,7 @@ window.onload = function () {
     document.getElementById("astronomicalObjectImage").onclick = function () {
         const DSS_ZOOM = 9;
         if (currentSearchedAstronomicalObject !== null) {
-            window.open(`http://www.server3.sky-map.org/v2?ra=${(currentSearchedAstronomicalObject.rightAscension / 15.0)}&de=${currentSearchedAstronomicalObject.declination}&zoom=${DSS_ZOOM}&show_grid=0&show_constellation_lines=0&show_constellation_boundaries=0&show_const_names=0&show_galaxies=1&img_source=${SKY_SURVEY_SOURCE}`);
+            window.open(`https://www.server3.sky-map.org/v2?ra=${(currentSearchedAstronomicalObject.rightAscension / 15.0)}&de=${currentSearchedAstronomicalObject.declination}&zoom=${DSS_ZOOM}&show_grid=0&show_constellation_lines=0&show_constellation_boundaries=0&show_const_names=0&show_galaxies=1&img_source=${SKY_SURVEY_SOURCE}`);
         }
     };
 
@@ -265,7 +265,7 @@ window.onload = function () {
             document.getElementById("astronomicalObjectImageFOVLabel").innerHTML = (DSS_FOV * 60); // in arcminutes
 
             // set the image source
-            document.getElementById("astronomicalObjectImage").src = `http://server1.wikisky.org/imgcut?ra=${(currentSearchedAstronomicalObject.rightAscension / 15.0)}&de=${currentSearchedAstronomicalObject.declination}&angle=${DSS_FOV}&img_id=all&width=${DSS_IMAGE_WIDTH}&height=${DSS_IMAGE_HEIGHT}&survey=${SKY_SURVEY_SOURCE}`;
+            document.getElementById("astronomicalObjectImage").src = `https://server1.wikisky.org/imgcut?ra=${(currentSearchedAstronomicalObject.rightAscension / 15.0)}&de=${currentSearchedAstronomicalObject.declination}&angle=${DSS_FOV}&img_id=all&width=${DSS_IMAGE_WIDTH}&height=${DSS_IMAGE_HEIGHT}&survey=${SKY_SURVEY_SOURCE}`;
         }
     };    
 
