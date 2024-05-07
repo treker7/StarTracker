@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Star Tracker</title>
+
+        <link rel="stylesheet" href="css/site.css" />
+        <link rel="stylesheet" href="css/typeAhead.css" />
+        <!-- Load Bootstrap CSS from CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <link rel="stylesheet" href="node_modules/pikaday/css/pikaday.css" />
+    </head>
+    <body>
+        <div class="container-fluid body-content">
+            <h2>Star Tracker</h2>
+            <div class="row" style="margin: 10px 10px;">
+                <div class="col-lg-2">
+                    <div>
+                        <label for="observersTimeZone">Current UTC Offset: </label>
+                        <select id="observersTimeZone" class="form-control" style="width: 130px;"></select>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div>
+                        <label for="observersLocation">Current Location: </label>
+                        <select id="observersLocation" class="form-control" style="width: 190px"></select>                    
+                        <button id="deleteLocation" class="btn" style="font-size: x-small; padding: 5px 5px; margin: 5px 0px;">Delete Location</button>&nbsp;
+                        <button id="addLocation" class="btn" style="font-size: x-small; padding: 5px 5px; margin: 5px 0px;">Add A Location</button>
+                    </div>                
+                </div>
+                <div class="col-lg-5">
+                    <label for="astronomicalObjectIdentifier">Astronomical Object: </label><br />
+                    <span class="type-ahead-group">
+                        <input type="search" id="astronomicalObjectIdentifier" style="width: 200px;" length="60" placeholder="" autofocus />
+                    </span>
+                    &nbsp;
+                    <button class="btn btn-primary" id="searchAstronomicalObjects">Search</button>
+                    &nbsp;
+                    <span class="alert-danger hidden" id="searchResultsError" style="margin: 0px 10px; font-size: larger;">No Results</span>
+                </div>
+                <div class="col-lg-3">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">RA (H:M:S)</th>
+                            <th class="text-center">DEC (D:M:S)</th>
+                        </tr>
+                        <tr id="astronomicalObjectSearchResults" class="text-right">
+                            <td class="id"> </td>
+                            <td class="ra"> </td>
+                            <td class="dec"> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 text-center">
+                    <h4>DSS2 Image - FOV: <span id="astronomicalObjectImageFOVLabel">20</span> arcminutes</h4>
+                    <div class="row">
+                        <div class="col-md-11">
+                            <img id="astronomicalObjectImage" class="img-responsive pointy-cursor" />
+                        </div>
+                        <div class="col-md-1">
+                            <span><b>+</b><input type="range" id="astronomicalObjectImageFOV" min="1" max="10" value="5" class="vertical-slider" style="width: 10px; height: 240px; margin: auto;" orient="vertical" /><b>-</b></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 text-center">
+                    <h4 class="text-left" style="margin: 4px 40px;">
+                        Altitude Graph -
+                        &nbsp;
+                        <button id="altitudeGraphBackwardDay" class="btn"><<<</button>
+                        &nbsp;
+                        <button id="altitudeGraphForwardDay" class="btn">>>></button>
+                        &nbsp;
+                        Start Date: <input type="text" id="altitudeGraphDateStart" style="width: 145px;">
+                        &nbsp;&nbsp;&nbsp;
+                        End Date: <input type="text" id="altitudeGraphDateStop" style="width: 145px;">
+                    </h4>
+                    <canvas id="astronomicalObjectAltitudeMap"></canvas>
+                </div>
+            </div>
+            <div id="addLocationDialog" class="row hidden well fullscreen">
+                <div class="text-left">
+                    <div class="col-lg-3 col-lg-offset-4">
+                        <h3>Add A Location</h3>
+                        <label for="locationName">Name: </label>
+                        <input type="text" id="locationName" class="form-control"/>
+                        <br />
+                        <label for="locationLatitude">Latitude: </label>
+                        <input type="text" id="locationLatitude" class="form-control"/>
+                        <br />
+                        <label for="locationLongitude">Longitude: </label>
+                        <input type="text" id="locationLongitude" class="form-control"/>
+                        <br />
+                        <button id="cancelAddLocation" class="btn" style="width: 100px;">Cancel</button>
+                        &nbsp;
+                        <button id="saveLocation" class="btn btn-primary" style="width: 120px;">Save Location</button>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <footer>
+                <p>&copy; 2024 - Treker Battig</p>
+            </footer>
+        </div>
+        <script src="dist/main.js"></script>
+    </body>
+</html>

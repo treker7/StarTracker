@@ -1,0 +1,28 @@
+{
+  "name": "startracker",
+  "version": "1.0.0",
+  "author": "Treker Battig",
+  "description": "Tracks astronomical objects across the sky over time.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/treker7/StarTracker.git"
+  },
+  "dependencies": {
+    "@treker7/practical-astronomy": "github:treker7/practical-astronomy",
+    "chart.js": "^2.7.2",
+    "chartjs-plugin-annotation": "^0.5.7",
+    "moment": "^2.30.1",
+    "pikaday": "^1.8.2",
+    "require.js": "^1.0.0",
+    "type-ahead": "^2.1.0"
+  },
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "@types/chart.js": "^2.9.41",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
