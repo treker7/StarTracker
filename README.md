@@ -1,6 +1,6 @@
 # StarTracker
 
-Tracks the position of any astronomical object from any location on the Earth's surface.
+Track the position of any astronomical object from any location on the Earth's surface.
 
 Installation:
 ```
