@@ -325,7 +325,6 @@ export class AltitudeGraph {
             this.altitudeGraph.options.annotation.annotations.push(AltitudeGraph.getBoxArea(currSetGraphHour + nauticalTwilightTime, currRiseGraphHour - nauticalTwilightTime, 0, 90, darknessColor));
             this.altitudeGraph.options.annotation.annotations.push(AltitudeGraph.getBoxArea(currSetGraphHour + astronomicalTwilightTime, currRiseGraphHour - astronomicalTwilightTime, 0, 90, darknessColor));
 
-
             currSetGraphHour = moment.duration(currDate.diff(startDate)).asHours() + currSunRiseAndSetTime.setTime;
         }
     }
@@ -405,7 +404,7 @@ export class AltitudeGraph {
 
             if (id1 !== id2) { // if they are not the same object
                 let currHorizonCoordinate = CoordinateSystemService.convertFromEquatorialToHorizonCoordinate(astronomicalObject.getEquatorialCoordinate(currDate), this.geographicCoordinate, currDate);
-                if (MathService.areWithinRadius(checkHorizonCoordinates, currHorizonCoordinate, checkAstronomicalObjectProximity.degreesRadius)) { // add proximity alert annotation to graph
+                if (MathService.areWithinRadius(checkHorizonCoordinates, currHorizonCoordinate, checkAstronomicalObjectProximity.angularDistance)) { // add proximity alert annotation to graph
                     let xMin = moment.duration(currDate.diff(startDate)).asHours();
                     let xMax = xMin + hoursDelta;
                     const CONFLICT_ANNOTATION_RADIUS = 4;
@@ -453,10 +452,10 @@ export class AstronomicalObjectGraph {
 export class AstronomicalObjectProximity {
     /**
      * @param {AstronomicalObject} astronomicalObject - the astronomical object to graph
-     * @param {number} anuglarDistance - the angular distance to check
+     * @param {number} angularDistance - the angular distance to check
      */
-    constructor(astronomicalObject, anuglarDistance) {
+    constructor(astronomicalObject, angularDistance) {
         this.astronomicalObject = astronomicalObject;
-        this.anuglarDistance = anuglarDistance;
+        this.angularDistance = angularDistance;
     }
 }

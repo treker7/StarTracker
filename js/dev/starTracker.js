@@ -339,7 +339,7 @@ window.onload = function () {
     altitudeGraph.addAstronomicalObject(new AstronomicalObjectGraph(moon, "#888F"));
     
     // add the moon to the list of astronomical objects which will be automatically checked on the altitude graph for proxmity alerts
-    const MOON_ANGULAR_PROSIXIMITY_ALERT_RADIUS = 30; // in decimal degrees
+    const MOON_ANGULAR_PROSIXIMITY_ALERT_RADIUS = 0.52; // the angular diameter of the moon in decimal degrees
     altitudeGraph.addAstronomicalObjectCheckProximity(new AstronomicalObjectProximity(moon, MOON_ANGULAR_PROSIXIMITY_ALERT_RADIUS));    
 
     var updateObserversLocation = function (newGeographicCoordinate) {        
