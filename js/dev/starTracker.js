@@ -4,7 +4,6 @@ import Pikaday from 'pikaday';
 import AstronomicalObject from '@treker7/practical-astronomy/models/astronomicalObject';
 import GeographicCoordinate from '@treker7/practical-astronomy/models/geographicCoorindate.js';
 import AngleConversionService from '@treker7/practical-astronomy/services/angleConversionService';
-import sun from '@treker7/practical-astronomy/services/sunService';
 import moon from '@treker7/practical-astronomy/services/moonService';
 import { AltitudeGraph, AstronomicalObjectGraph, AstronomicalObjectProximity } from  './altitudeGraph.js';
 
@@ -55,6 +54,7 @@ window.onload = function () {
     var defaultSavedLocations = {
         "Cambridge Springs, PA": DEFAULT_LOCATION,
         "Grove City, PA": new GeographicCoordinate(41.1555, -80.0793),
+        "Redmond, WA": new GeographicCoordinate(47.6739, -122.1215),
         "Amsterdam, NL": new GeographicCoordinate(52.3791, 4.9003),
     };
     var observersSavedLocations = JSON.parse(localStorage.getItem("observersSavedLocations") || null) || defaultSavedLocations;
