@@ -248,7 +248,7 @@ window.onload = function () {
     document.getElementById("astronomicalObjectImage").onclick = function () {
         const DSS_ZOOM = 9;
         if (currentSearchedAstronomicalObject !== null) {
-            window.open(`https://www.server3.sky-map.org/v2?ra=${(currentSearchedAstronomicalObject.rightAscension / 15.0)}&de=${currentSearchedAstronomicalObject.declination}&zoom=${DSS_ZOOM}&show_grid=0&show_constellation_lines=0&show_constellation_boundaries=0&show_const_names=0&show_galaxies=1&img_source=${SKY_SURVEY_SOURCE}`);
+            window.open(`https://server3.sky-map.org/v2?ra=${(currentSearchedAstronomicalObject.rightAscension / 15.0)}&de=${currentSearchedAstronomicalObject.declination}&zoom=${DSS_ZOOM}&show_grid=0&show_constellation_lines=0&show_constellation_boundaries=0&show_const_names=0&show_galaxies=1&img_source=${SKY_SURVEY_SOURCE}`);
         }
     };
 
