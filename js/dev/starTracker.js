@@ -385,4 +385,9 @@ window.onload = function () {
         altitudeGraphDateStop.utcOffset(newUTCOffset);
         altitudeGraph.setLocationAndDateRange(observersCurrentLocation, altitudeGraphDateStart, altitudeGraphDateStop);
     });
+
+    // look up a default astronomical object on page load
+    const DEFAULT_ASTRONOMICAL_OBJECT_ID = "ngc628";
+    document.getElementById("astronomicalObjectIdentifier").value = DEFAULT_ASTRONOMICAL_OBJECT_ID;
+    searchAstronomicalObjects();
 };
