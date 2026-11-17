@@ -160,6 +160,32 @@ window.onload = function () {
 
     var typeAhead = new TypeAhead(document.getElementById("astronomicalObjectIdentifier"), Object.keys(previousAstronomicalObjectSearches));
 
+    // SIMBAD TAP endpoints, tried in order. The CfA Harvard mirror comes first since
+    // most users are US based; the primary CDS server and the IDIA (South Africa)
+    // mirror are used if it is unreachable.
+    const SIMBAD_TAP_ENDPOINTS = [
+        "https://simbad.cfa.harvard.edu/simbad/sim-tap/sync",
+        "https://simbad.cds.unistra.fr/simbad/sim-tap/sync",
+        "https://simbad.idia.ac.za/simbad/sim-tap/sync"
+    ];
+
+    var querySimbad = async function (adqlQuery) {
+        let lastError = null;
+        for (const endpoint of SIMBAD_TAP_ENDPOINTS) {
+            try {
+                const response = await fetch(`${endpoint}?request=doQuery&lang=adql&format=json&query=${encodeURIComponent(adqlQuery)}&phase=run`, { method: "GET" });
+                if (!response.ok) {
+                    throw new Error(`${endpoint} responded with HTTP ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.warn(`SIMBAD query failed at ${endpoint}, trying next endpoint`, error);
+                lastError = error;
+            }
+        }
+        throw lastError;
+    };
+
     var searchAstronomicalObjects = function () {
         var objectId = document.getElementById("astronomicalObjectIdentifier").value;
         
@@ -171,40 +197,34 @@ window.onload = function () {
         } else {
             let simbadQueryStr = `SELECT RA, DEC, main_id FROM basic JOIN ident ON oidref = oid WHERE id = '${objectId}';`;
 
-            fetch(`https://simbad.u-strasbg.fr/simbad/sim-tap/sync?request=doQuery&lang=adql&format=json&query=${simbadQueryStr}&phase=run`,
-                {
-                    method: "GET"
+            querySimbad(simbadQueryStr).then((responseObj) => {
+                if (responseObj.data[0] != null) {
+                    let ra = responseObj.data[0][0];
+                    let dec = responseObj.data[0][1];
+                    let id = responseObj.data[0][2];
+
+                    currentSearchedAstronomicalObject = new AstronomicalObject(ra, dec, id);
+                    setAstronomicalObject(currentSearchedAstronomicalObject);
+
+                    // cache this object
+                    previousAstronomicalObjectSearches[objectId] = currentSearchedAstronomicalObject;
+                    localStorage.setItem("previousAstronomicalObjectSearches", JSON.stringify(previousAstronomicalObjectSearches));
+
+                    // update type ahead
+                    typeAhead.update(Object.keys(previousAstronomicalObjectSearches));
+                } else {
+                    currentSearchedAstronomicalObject = null;
+                    document.getElementById("searchResultsError").classList.remove("hidden");
+
+                    let table = document.getElementById("astronomicalObjectSearchResults");
+                    table.getElementsByClassName("id")[0].innerHTML = "";
+                    table.getElementsByClassName("ra")[0].innerHTML = "";
+                    table.getElementsByClassName("dec")[0].innerHTML = "";
+
+                    document.getElementById("astronomicalObjectImage").src = "";
+
+                    altitudeGraph.showAstronomicalObject(0, false);
                 }
-            ).then((response) => {
-                response.json().then((responseObj) => {
-                    if (responseObj.data[0] != null) {
-                        let ra = responseObj.data[0][0];
-                        let dec = responseObj.data[0][1];
-                        let id = responseObj.data[0][2];
-
-                        currentSearchedAstronomicalObject = new AstronomicalObject(ra, dec, id);
-                        setAstronomicalObject(currentSearchedAstronomicalObject);
-
-                        // cache this object
-                        previousAstronomicalObjectSearches[objectId] = currentSearchedAstronomicalObject;
-                        localStorage.setItem("previousAstronomicalObjectSearches", JSON.stringify(previousAstronomicalObjectSearches));
-
-                        // update type ahead
-                        typeAhead.update(Object.keys(previousAstronomicalObjectSearches));
-                    } else {
-                        currentSearchedAstronomicalObject = null;
-                        document.getElementById("searchResultsError").classList.remove("hidden");
-
-                        let table = document.getElementById("astronomicalObjectSearchResults");
-                        table.getElementsByClassName("id")[0].innerHTML = "";
-                        table.getElementsByClassName("ra")[0].innerHTML = "";
-                        table.getElementsByClassName("dec")[0].innerHTML = "";
-
-                        document.getElementById("astronomicalObjectImage").src = "";
-
-                        altitudeGraph.showAstronomicalObject(0, false);            
-                    }
-                })
             }).catch((error) => {
                 console.log(error);
             });
